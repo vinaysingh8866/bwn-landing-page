@@ -1,0 +1,80 @@
+.dropdown-hide{
+  opacity: 0;
+  transform: translateY(-50px);
+  visibility: hidden;
+}
+
+.left-video{
+  background-image: url('/public/left-bg-circle.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.right-video{
+  background-image: url('/public/right-bg-circle.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+/* Animation */
+
+.cursor {
+  --base-w: 19;
+  --base-h: 19;
+  --w: var(--base-w);
+  --h: var(--base-h);
+  height: calc(var(--base-h) * 1px);
+  width: calc(var(--base-w) * 1px);
+  top: 0;
+  left: 0;
+  transform: translate(calc(1px * var(--x)), calc(1px * var(--y)))
+    translate(-50%, -50%);
+  opacity: 0.9;
+  transform-origin: center center;
+  overflow: hidden;
+  border-radius: calc(var(--base-w) * 1px);
+
+  transition-property: transform, opacity;
+  transition-duration: 0.1s, 0.3s;
+
+  &[data-hover] {
+    --px: calc(((var(--x) - var(--hover-x)) / var(--w)) - 0.5);
+    --py: calc(((var(--y) - var(--hover-y)) / var(--h)) - 0.5);
+
+    --dw: calc(var(--base-w) / var(--w));
+    --dh: calc(var(--base-h) / var(--h));
+
+    opacity: 0.2;
+    border-radius: calc(var(--base-w) * var(--dw) * 1px) /
+      calc(var(--base-h) * var(--dh) * 1px);
+
+    transform: translate(calc(1px * var(--hover-x)), calc(1px * var(--hover-y)))
+      translate(calc(150% * var(--px)), calc(150% * var(--py)))
+      scale(calc(1 / var(--dw)), calc(1 / var(--dh))) translate(50%, 50%);
+  }
+
+
+}
+
+.hover-button {
+  appearance: none;
+  border: none;
+  background: transparent;
+  transition: transform 0.3s ease;
+  /* font: inherit; */
+  /* font-size: 7vmin;
+  padding: 0.25em 0.5em;
+  border: solid 0.1em rgba(gray, 0.2);
+  border-radius: 0.4em;
+  color: #4981ef;
+  width: 5.25em; */
+
+  &:hover {
+    --px: calc(((var(--pointer-x) - var(--x)) / var(--w)) - 0.25);
+    --py: calc(((var(--pointer-y) - var(--y)) / var(--h)) - 0.25);
+    transition-duration: 0s;
+    transform: translate(calc(var(--px) * 100px), calc(var(--py) * 100px));
+  }
+}
+
+
+
