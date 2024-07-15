@@ -63,11 +63,13 @@ const DeleteUser = () => {
         <h1>Delete User</h1>
         <form onSubmit={handleSubmit}>
           <input
+            style={{ marginBottom: "10px" }}
             type="email"
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
+            style={{ marginBottom: "10px" }}
             type="password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
