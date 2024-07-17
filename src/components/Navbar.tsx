@@ -237,7 +237,7 @@ export default function Navbar({}: NavbarProps) {
                   p="0"
                   onClick={() => {
                     // goto public/installers/unsigned_bwn.dmg
-                    window.location.href = "/installers/unsigned_bwn.dmg";
+                    window.location.href = "/installers/BWN.dmg";
                   }}
                 >
                   <Image src="/download.svg" h={"16px"} />

@@ -3,3 +3,4 @@
 *.deb filter=lfs diff=lfs merge=lfs -text
 *.apk filter=lfs diff=lfs merge=lfs -text
 *.dmg filter=lfs diff=lfs merge=lfs -text
+public/installers/BWN.dmg filter=lfs diff=lfs merge=lfs -text
