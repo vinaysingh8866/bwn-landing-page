@@ -113,7 +113,7 @@ export default function Navbar({}: NavbarProps) {
                   p="0"
                   onClick={() => {
                     // goto public/installers/unsigned_bwn.exe
-                    window.location.href = "https://olive-rubber-aphid-157.mypinata.cloud/ipfs/QmSEFK6X69QxPg2cJXcTr7TsJ7qsprYkn66kCmXDWhb1yD/BWN.exe";
+                    window.location.href = "https://purple-abundant-anaconda-910.mypinata.cloud/ipfs/QmbftgGSi6MNj8czrrAgDqYhS9QzZxURCpJbS2zdRDqenj";
                   }}
                 >
                   <Image src="/download.svg" h={"16px"} />
