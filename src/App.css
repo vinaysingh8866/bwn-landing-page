@@ -77,4 +77,16 @@
 }
 
 
+/* Scroll Animation */
 
+.scroll-inline{
+  overflow: hidden;
+  animation: scrollLeft linear;
+  animation-timeline: scroll(root);
+}
+
+@keyframes scrollLeft{
+  to{
+      transform: translateX(calc(-50% - 350rem));
+  }
+}

@@ -22,25 +22,25 @@ export default function Hero({}:HeroProps ){
     return(
         <VStack className="" w={'full'} justifyContent={'center'} overflow={'hidden'}>
             <VStack w={'full'} justifyContent={'center'} gap={'0'} maxW={'1327px'} pt={'2.5rem'} px={'1rem'} textAlign={'center'}>
-                <Text className=" animate__fadeInUp" style={{animationDelay:'0.2s',animationDuration:'0.7s'}} fontSize={'48px'} lineHeight={'72px'} fontWeight={'700'}>
+                <Text className=" animate__fadeInUp" style={{animationDelay:'0.2s',animationDuration:'0.7s'}} fontSize={{'base':'clamp(24px,2vw,32px)','md':'48px'}} lineHeight={{'base':'clamp(32px,3vw,54px)','md':'72px'}} fontWeight={'700'}>
                     Welcome to India’s all New Internet
                 </Text>
                 {/* <AnimatedLetters styles={{fontSize:'48px',lineHeight:'72px',fontWeight:'700'}} letterClass={letterClass} 
                 strAry={['W','e','l','c','o','m','e',' ','t','o',' ','I','n','d','i','a’','s',' ','a','l','l',' ','N','e','w',' ','I','n','t','e','r','n','e','t']}
                 idx={2}
                 /> */}
-                <Text className="hero-heading " style={{animationDelay:'0.1s',animationDuration:'0.5s'}} fontSize={'32px'} lineHeight={'40px'} fontWeight={'600'} mb={'0.75rem'}>
+                <Text className="hero-heading " style={{animationDelay:'0.1s',animationDuration:'0.5s'}} fontSize={{'base':'clamp(18px,1.5vw,24px)','md':'32px'}} lineHeight={{'base':'clamp(24px,2vw,32px)','md':'40px'}} fontWeight={'600'} mb={'0.75rem'}>
                     Discover, Connect, Transact and Secure
                 </Text>
-                <Text className="" style={{animationDelay:'0.15s',animationDuration:'0.6s'}} fontWeight={'700'} fontSize={'16px'} lineHeight={'24px'}>
+                <Text className="" style={{animationDelay:'0.15s',animationDuration:'0.6s'}} fontWeight={'700'} fontSize={{'base':'clamp(14px,1vw,16px)','md':'16px'}} lineHeight={{'base':'18px','md':'24px'}}>
                     Engage in real-time discussions with integrated chatbots, sign documents securely with DIDs, and manage your crypto assets  
                 </Text>
-                <Text className="" style={{animationDelay:'0.3s',animationDuration:'0.7s'}} fontWeight={'400'} fontSize={'16px'} lineHeight={'24px'}>   
+                <Text className="" style={{animationDelay:'0.3s',animationDuration:'0.7s'}} fontWeight={'400'} fontSize={{'base':'clamp(14px,1vw,16px)','md':'16px'}} lineHeight={{'base':'18px','md':'24px'}}>   
                     with ease. Dive deep into research with professional tools and insights. Experience the cutting-edge of web browsing today.
                 </Text>
             </VStack>
 
-            <Box  position={'relative'} h={'60vh'} maxH={'585px'} w={'full'} 
+            <Box position={'relative'} h={'60vh'} maxH={'585px'} w={'full'} 
             // bgGradient={'linear-gradient(97.62deg, #E0345F 0%, #B20833 100%)'} 
             bgImage={'/hero-bg.svg'} bgSize={'cover'} bgRepeat={'no-repeat'}
             mt={'20rem'} >
@@ -48,7 +48,7 @@ export default function Hero({}:HeroProps ){
 
                 </Box> */}
 
-                <Box  position={'absolute'} left={'50%'} bottom={'5rem'} transform={'translateX(-50%)'} h={'85vh'} maxH={'710px'} w={'full'} maxW={'1099.01px'} px={'2rem'}>
+                <Box display={{'md':'block','base':'none'}} position={'absolute'} left={'50%'} bottom={'5rem'} transform={'translateX(-50%)'} h={'85vh'} maxH={'710px'} w={'full'} maxW={'1099.01px'} px={'2rem'} >
                     <VStack id="app" 
                     onMouseMove={(e)=>{
                         const elCursor=elCursorRef.current
@@ -63,7 +63,7 @@ export default function Hero({}:HeroProps ){
                     <Box ref={elCursorRef} className="cursor" position={'absolute'} top={0} left={0} pointerEvents={'none'} h={'full'} w={'full'}>
 
                     </Box>
-                    <Image 
+                    <Image
                     ref={imgContRef}
 
                     onMouseEnter={()=>{
@@ -114,6 +114,10 @@ export default function Hero({}:HeroProps ){
 
                     className="animate__fadeInUp hover-button" style={{animationDelay:'0.1s',animationDuration:'0.85s'}} w={'full'} h={'full'} objectFit={'contain'} src="/Browser Landing.svg"/>
                     </VStack>
+                </Box>
+
+                <Box display={{'md':'none','base':'block'}} position={'absolute'} left={'50%'} bottom={'5rem'} transform={'translateX(-50%)'} h={'85vh'} maxH={'710px'} w={'full'} maxW={'1099.01px'} px={'2rem'} >
+                    <Image minW={'850px'} className=" scroll-inline" w={'full'} h={'full'} objectFit={'contain'} src="/Browser Landing.svg" />
                 </Box>
             </Box>
         </VStack>
