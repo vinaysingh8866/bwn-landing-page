@@ -134,7 +134,7 @@ export default function Navbar({}:NavbarProps ){
 {/*                                     onClick={() => {
                                         window.location.href =
                                         "https://olive-rubber-aphid-157.mypinata.cloud/ipfs/QmSEFK6X69QxPg2cJXcTr7TsJ7qsprYkn66kCmXDWhb1yD/bharat-webnavigator-stable-128.0.6572.0-1.x86_64.rpm"; */}
-                                    }}
+{/*                                     }} */}
                                     >
                                     .rpm
                                     <Image src="/download.svg" h={"16px"} />
@@ -147,7 +147,7 @@ export default function Navbar({}:NavbarProps ){
 {/*                                     onClick={() => {
                                         window.location.href =
                                         "https://olive-rubber-aphid-157.mypinata.cloud/ipfs/QmSEFK6X69QxPg2cJXcTr7TsJ7qsprYkn66kCmXDWhb1yD/bharat-webnavigator-stable_128.0.6572.0-1_amd64.deb"; */}
-                                    }}
+{/*                                     }} */}
                                     >
                                     .deb
                                     <Image src="/download.svg" h={"16px"} />
@@ -186,7 +186,7 @@ export default function Navbar({}:NavbarProps ){
                             onClick={() => {
                                 // goto public/installers/unsigned_bwn.dmg
                                 // window.location.href = "https://olive-rubber-aphid-157.mypinata.cloud/ipfs/QmSEFK6X69QxPg2cJXcTr7TsJ7qsprYkn66kCmXDWhb1yD/BWN.dmg";
-                            }}
+                            // }}
                             >
                             <Image src="/download.svg" h={"16px"} />
                             </Button>
