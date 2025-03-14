@@ -59,7 +59,7 @@ export default function Navbar({}:NavbarProps ){
                             p="0"
                             onClick={() => {
                                 // goto public/installers/unsigned_bwn.exe
-                                // window.location.href = "https://github.com/vinaysingh8866/bwn-landing-page/raw/refs/heads/main/public/installers/BWN.exe?download=";
+                                window.location.href = "";
                             }}
                             >
                             <Image src="/download.svg" h={"16px"} />
@@ -95,7 +95,7 @@ export default function Navbar({}:NavbarProps ){
                             type="button"
                             p="0"
                             onClick={() => {
-                                // window.location.href = "https://olive-rubber-aphid-157.mypinata.cloud/ipfs/QmSEFK6X69QxPg2cJXcTr7TsJ7qsprYkn66kCmXDWhb1yD/BharatWebNavigator.apk";
+                                window.location.href = "";
                             }}
                             >
                             <Image src="/download.svg" h={"16px"} />
@@ -131,10 +131,9 @@ export default function Navbar({}:NavbarProps ){
                                     variant={"none"}
                                     type="button"
                                     p="0"
-{/*                                     onClick={() => {
-                                        window.location.href =
-                                        "https://olive-rubber-aphid-157.mypinata.cloud/ipfs/QmSEFK6X69QxPg2cJXcTr7TsJ7qsprYkn66kCmXDWhb1yD/bharat-webnavigator-stable-128.0.6572.0-1.x86_64.rpm"; */}
-{/*                                     }} */}
+                                    onClick={() => {
+                                        window.location.href ="";
+                                    }}
                                     >
                                     .rpm
                                     <Image src="/download.svg" h={"16px"} />
@@ -144,10 +143,9 @@ export default function Navbar({}:NavbarProps ){
                                     variant={"none"}
                                     type="button"
                                     p="0"
-{/*                                     onClick={() => {
-                                        window.location.href =
-                                        "https://olive-rubber-aphid-157.mypinata.cloud/ipfs/QmSEFK6X69QxPg2cJXcTr7TsJ7qsprYkn66kCmXDWhb1yD/bharat-webnavigator-stable_128.0.6572.0-1_amd64.deb"; */}
-{/*                                     }} */}
+                                    onClick={() => {
+                                        window.location.href = "";
+                                    }}
                                     >
                                     .deb
                                     <Image src="/download.svg" h={"16px"} />
@@ -185,8 +183,8 @@ export default function Navbar({}:NavbarProps ){
                             p="0"
                             onClick={() => {
                                 // goto public/installers/unsigned_bwn.dmg
-                                // window.location.href = "https://olive-rubber-aphid-157.mypinata.cloud/ipfs/QmSEFK6X69QxPg2cJXcTr7TsJ7qsprYkn66kCmXDWhb1yD/BWN.dmg";
-                            // }}
+                                window.location.href = "";
+                            }}
                             >
                             <Image src="/download.svg" h={"16px"} />
                             </Button>
