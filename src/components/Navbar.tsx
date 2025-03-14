@@ -59,7 +59,7 @@ export default function Navbar({}:NavbarProps ){
                             p="0"
                             onClick={() => {
                                 // goto public/installers/unsigned_bwn.exe
-                                window.location.href = "https://raw.githubusercontent.com/vinaysingh8866/bwn-landing-page/main/public/installers/BWN.exe";
+                                window.location.href = "https://github.com/vinaysingh8866/bwn-landing-page/raw/refs/heads/main/public/installers/BWN.exe?download=";
                             }}
                             >
                             <Image src="/download.svg" h={"16px"} />
