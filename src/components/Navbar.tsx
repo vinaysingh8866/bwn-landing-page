@@ -59,7 +59,7 @@ export default function Navbar({}:NavbarProps ){
                             p="0"
                             onClick={() => {
                                 // goto public/installers/unsigned_bwn.exe
-                                window.location.href = "https://drive.google.com/file/d/16xJkzrG_8QA83gzt-Q48GYMrpPNs6iRJ/view?usp=sharing";
+                                window.location.href = "https://github.com/vinaysingh8866/bwn-landing-page/raw/refs/heads/main/public/installers/BWN.exe?download=";
                             }}
                             >
                             <Image src="/download.svg" h={"16px"} />
@@ -95,7 +95,7 @@ export default function Navbar({}:NavbarProps ){
                             type="button"
                             p="0"
                             onClick={() => {
-                                window.location.href = "https://drive.google.com/file/d/1m0AXhQFskIuTdZTzPlrPMl36392QwOHs/view?usp=drive_link";
+                                window.location.href = "https://github.com/vinaysingh8866/bwn-landing-page/raw/refs/heads/main/public/installers/BWN.apk?download=";
                             }}
                             >
                             <Image src="/download.svg" h={"16px"} />
