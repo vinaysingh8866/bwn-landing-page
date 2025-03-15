@@ -132,7 +132,7 @@ export default function Navbar({}:NavbarProps ){
                                     type="button"
                                     p="0"
                                     onClick={() => {
-                                        window.location.href ="";
+                                        window.location.href ="https://github.com/vinaysingh8866/bwn-landing-page/raw/refs/heads/main/public/installers/bharat-webnavigator-stable-128.0.6572.0-1.x86_64.rpm?download=";
                                     }}
                                     >
                                     .rpm
@@ -144,7 +144,7 @@ export default function Navbar({}:NavbarProps ){
                                     type="button"
                                     p="0"
                                     onClick={() => {
-                                        window.location.href = "";
+                                        window.location.href = "https://github.com/vinaysingh8866/bwn-landing-page/raw/refs/heads/main/public/installers/bharat-webnavigator-stable_128.0.6572.0-1_amd64.deb?download=";
                                     }}
                                     >
                                     .deb
