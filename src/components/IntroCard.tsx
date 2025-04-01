@@ -1,5 +1,5 @@
 import { Box, HStack,  } from "@chakra-ui/react";
-import { ReactNode,   } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 // import AOS from 'aos'
 
 
@@ -11,9 +11,24 @@ interface IntroCardProps{
 
 // eslint-disable-next-line no-empty-pattern
 export default function IntroCard({children,imgOnLeft,imgAddress}:IntroCardProps ){
-    // useEffect(()=>{
-    //     AOS.init()
-    // },[])
+    const leftVideoRef = useRef<HTMLVideoElement>(null);
+    const rightVideoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        // Try to play videos when component mounts
+        if (leftVideoRef.current) {
+            leftVideoRef.current.play().catch(err => {
+                console.error("Left video play failed:", err);
+            });
+        }
+
+        if (rightVideoRef.current) {
+            rightVideoRef.current.play().catch(err => {
+                console.error("Right video play failed:", err);
+            });
+        }
+    }, []);
+
     return(
         <>
         {imgOnLeft?
@@ -21,7 +36,19 @@ export default function IntroCard({children,imgOnLeft,imgAddress}:IntroCardProps
                 <HStack maxW={'1327px'} px={{'base':'1.5rem','md':'5rem'}} w={'full'} justifyContent={'space-between'} alignItems={'center'} gap={'5rem'} flexDir={{'base':'column','md':'row'}}>
                 <Box w={{'base':'full','md':'38%'}} px={{'base':'2rem','md':'0'}}>
                     {/* <Image src={imgAddress} w={'full'} h={'full'}/> */}
-                    <video className="left-video" style={{width:'100%'}} src={imgAddress} autoPlay loop muted></video>
+                    <video 
+                        className="left-video" 
+                        style={{width:'100%'}} 
+                        ref={leftVideoRef}
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline
+                        preload="auto"
+                    >
+                        <source src={imgAddress} type="video/webm" />
+                        Your browser does not support the video tag.
+                    </video>
                         {/* <Image src="/left-bg-circle.svg"/> */}
                 </Box>
 
@@ -44,7 +71,19 @@ export default function IntroCard({children,imgOnLeft,imgAddress}:IntroCardProps
 
                     <Box w={{'base':'full','md':'38%'}} px={{'base':'2rem','md':'0'}}>
                         {/* <Image src={imgAddress} w={'full'} h={'full'}/> */}
-                        <video className="right-video" style={{width:'100%'}} src={imgAddress} autoPlay loop={true} muted></video>
+                        <video 
+                            className="right-video" 
+                            style={{width:'100%'}} 
+                            ref={rightVideoRef}
+                            autoPlay 
+                            loop={true} 
+                            muted 
+                            playsInline
+                            preload="auto"
+                        >
+                            <source src={imgAddress} type="video/webm" />
+                            Your browser does not support the video tag.
+                        </video>
                     </Box>
                 </HStack>
 
