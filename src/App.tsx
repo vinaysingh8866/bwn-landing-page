@@ -5,9 +5,7 @@ import Home from './components/Home'
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // You can also use <link> for styles
 import 'animate.css';
-import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { HStack } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { trackDownload } from './services/downloadTracker';
 import { trackVisit } from './services/visitTracker';
 
