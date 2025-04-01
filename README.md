@@ -28,3 +28,35 @@ export default {
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+# Bharat Web Navigator
+
+A lightweight web browser for the Indian market.
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+## Deployment on Vercel
+
+1. Push changes to GitHub
+2. Connect repository to Vercel
+3. Add environment variables:
+   - `DATABASE_URL`: PostgreSQL connection string
+
+## Environment Variables
+
+Create a `.env` file with:
+
+```
+DATABASE_URL=postgres://user:password@host:port/database?sslmode=require
+```
