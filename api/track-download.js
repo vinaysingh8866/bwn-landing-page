@@ -1,4 +1,5 @@
-const { Pool } = require('pg');
+import pkg from 'pg';
+const { Pool } = pkg;
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL
@@ -22,7 +23,7 @@ pool.query(createTablesQuery).catch(err => {
   console.error('Error creating tables:', err);
 });
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
