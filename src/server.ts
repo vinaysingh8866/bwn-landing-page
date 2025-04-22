@@ -1,9 +1,9 @@
-import express, { RequestHandler } from 'express';
+import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import pkg from 'pg';
 import process from 'node:process';
-import session, { SessionData } from 'express-session';
+import session from 'express-session';
 const { Pool } = pkg;
 
 // --- Type Augmentation for express-session --- 
@@ -25,7 +25,7 @@ if (!process.env.SESSION_SECRET) {
 }
 const sessionSecret = process.env.SESSION_SECRET || 'default_insecure_session_secret';
 
-// @ts-ignore - Suppress persistent type error for session middleware
+// @ts-expect-error - Suppress persistent type error for session middleware
 app.use(session({
   secret: sessionSecret,
   resave: false, 
