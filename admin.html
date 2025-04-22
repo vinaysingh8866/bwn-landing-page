@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            margin: 0;
+            background-color: #eef2f7; /* Slightly softer background for login */
+            color: #212529;
+            font-size: 16px; /* Base font size */
+            line-height: 1.5;
+        }
+        .admin-container { 
+            max-width: 1000px; 
+            margin: 30px auto; 
+            padding: 25px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+         }
+        /* Login Form Container - Enhanced */
+        #login-entry {
+            max-width: 420px; /* Slightly wider */
+            margin: 8% auto; /* Adjust vertical margin */
+            padding: 40px 50px; /* Adjust padding */
+            background-color: #ffffff;
+            border-radius: 10px; /* More rounded */
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
+            text-align: center;
+            /* Hide by default, shown by JS if not logged in */
+            display: none; 
+        }
+        #login-entry.visible {
+            display: block; /* JS will add this class */
+        }
+        #login-entry h2 {
+            margin-top: 0;
+            margin-bottom: 15px; 
+            color: #007bff; /* Use brand color */
+            font-weight: 700;
+            font-size: 1.8em; /* Larger title */
+            letter-spacing: -0.5px;
+        }
+        #login-entry .login-subtitle {
+            margin-bottom: 35px;
+            color: #6c757d; /* Subdued text */
+            font-size: 1rem;
+        }
+        
+        /* Input field styling */
+        #login-entry label { display: none; /* Hide labels, use placeholders */ }
+        #login-entry input[type="text"], 
+        #login-entry input[type="password"] {
+             display: block; 
+             width: 100%; 
+             margin-bottom: 20px; /* More space between inputs */
+             box-sizing: border-box; 
+             padding: 15px; /* More padding */
+             border: 1px solid #ced4da;
+             border-radius: 6px; /* Softer radius */
+             font-size: 1rem; 
+             background-color: #f8f9fa; /* Subtle background */
+             transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        #login-entry input[type="text"]:focus, 
+        #login-entry input[type="password"]:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            background-color: #fff;
+        }
+
+        /* Button styling */
+        #login-entry button#submit-login { 
+            padding: 15px 20px;
+            background-color: #007bff;
+            color: white; 
+            border: none; 
+            border-radius: 6px;
+            cursor: pointer; 
+            font-size: 1rem;
+            font-weight: 600; /* Bolder button text */
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            margin-top: 10px; /* Space above button */
+        }
+        #login-entry button#submit-login:hover {
+             background-color: #0056b3; 
+        }
+        #login-entry button#submit-login:active {
+            transform: translateY(1px); /* Click effect */
+        }
+
+        #login-error-message { 
+            color: #dc3545; 
+            margin-top: 25px; 
+            font-weight: 500; 
+            min-height: 1.5em; /* Prevent layout shift */
+        }
+        
+        /* --- Styles for when admin area is visible --- */
+        body.admin-logged-in {
+             background-color: #f8f9fa; /* Revert to admin area background */
+        }
+        
+        /* Main Admin Area */
+        #admin-main-area { display: none; }
+        
+        /* Navigation Bar - Refined */
+        .admin-navbar {
+            background-color: #ffffff; /* White navbar */
+            padding: 0 30px; /* More padding */
+            color: #212529; /* Dark text */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 65px; /* Slightly taller */
+            border-bottom: 1px solid #dee2e6; /* Subtle border */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .admin-navbar .nav-brand {
+            font-size: 1.5em; /* Larger brand */
+            font-weight: 700; /* Bolder brand */
+            color: #007bff; /* Brand color */
+            text-decoration: none;
+        }
+        .admin-navbar .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .admin-navbar .nav-links a, 
+        .admin-navbar .nav-links button {
+            color: #495057; /* Standard link color */
+            text-decoration: none;
+            padding: 8px 15px; /* Adjust padding */
+            margin-left: 10px; /* More spacing */
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.95rem; /* Slightly smaller nav links */
+            font-weight: 500;
+            border-radius: 5px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .admin-navbar .nav-links a:hover,
+        .admin-navbar .nav-links button:hover {
+            background-color: #e9ecef; /* Lighter hover */
+            color: #0056b3;
+        }
+        .admin-navbar .nav-links a.active {
+            color: #fff;
+            font-weight: 500;
+            background-color: #007bff; 
+        }
+        .admin-navbar .nav-links a.active:hover {
+             background-color: #0056b3; /* Darker hover for active */
+             color: #fff;
+        }
+        .admin-navbar .nav-links button#logout-button {
+            color: #dc3545; /* Danger color for logout */
+        }
+         .admin-navbar .nav-links button#logout-button:hover {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        /* Main Content Area - More padding */
+        .admin-content {
+            max-width: 1100px; 
+            margin: 40px auto; /* More margin */
+            padding: 30px; /* More padding */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        /* Content Panes */
+        .content-pane { display: none; }
+        .content-pane.active { display: block; }
+        .content-pane h2, .content-pane h3, .content-pane h4 {
+             color: #343a40; /* Consistent heading colors */
+             margin-bottom: 20px; /* Spacing below headings */
+             font-weight: 600;
+        }
+
+        /* Table - Improved Styling */
+        table {
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; /* More space above table */
+            margin-bottom: 20px;
+            font-size: 0.95rem; /* Slightly smaller table font */
+            border: 1px solid #dee2e6; /* Add border around table */
+            border-radius: 4px; /* Optional: Rounded corners for table */
+            overflow: hidden; /* Needed for border-radius on table */
+        }
+        th, td {
+            padding: 12px 15px; /* Adjust padding */
+            text-align: left; 
+            vertical-align: middle; /* Align text vertically */
+            border-bottom: 1px solid #dee2e6; /* Horizontal lines between rows */
+            /* Remove vertical borders: border-left: none; border-right: none; */
+        }
+        /* Header styling */
+        th {
+            background-color: #e9ecef; 
+            font-weight: 600; 
+            color: #495057;
+            border-top: none; /* Remove default top border if any */
+        }
+        /* Right-align the count column (assuming it's the second column) */
+        th:nth-child(2), 
+        td:nth-child(2) {
+            text-align: right;
+        }
+        /* Zebra striping */
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        /* Hover effect (adjust to work with zebra striping) */
+        tbody tr:hover {
+            background-color: #e2e6ea; /* Slightly darker hover */
+        }
+        /* Remove bottom border from last row */
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        #map-chart { 
+             width: 100%; 
+             height: 450px; 
+             margin-bottom: 30px; /* More space below map */
+             border: 1px solid #dee2e6;
+             border-radius: 4px;
+        }
+       
+        #error-message { color: #dc3545; margin-top: 20px; font-weight: 500; }
+        
+        /* Logout Link */
+        #logout-section { text-align: right; margin-bottom: 15px; }
+        #logout-link { color: #007bff; text-decoration: none; }
+        #logout-link:hover { text-decoration: underline; }
+
+    </style>
+</head>
+<body>
+
+<!-- Login Form Container -->
+<div id="login-entry">
+    <h2>BWN Panel</h2>
+    <p class="login-subtitle">Admin Login</p>
+    <label for="username" style="display: none;">Username</label>
+    <input type="text" id="username" required placeholder="Username">
+    <label for="password" style="display: none;">Password</label>
+    <input type="password" id="password" required placeholder="Password">
+    <button id="submit-login">Login</button> 
+    <div id="login-error-message"></div>
+</div>
+
+<!-- Main Admin Area (Hidden Initially) -->
+<div id="admin-main-area">
+    <!-- Navigation Bar -->
+    <nav class="admin-navbar">
+        <a href="#" class="nav-brand">BWN Panel</a>
+        <div class="nav-links">
+            <a href="#" class="nav-link active" data-target="stats-pane">Download Stats</a>
+            <a href="#" class="nav-link" data-target="extensions-pane">Extensions</a>
+            <button id="logout-button">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="admin-content">
+        <!-- Content Panes -->
+        <div id="stats-pane" class="content-pane active">
+            <h3>Total Downloads: <strong id="download-count">-</strong></h3>
+            <h4>Downloads by Location:</h4>
+            <div id="map-chart"></div>
+            <table id="location-table">
+                 <thead><tr><th>Location</th><th>Downloads</th></tr></thead>
+                 <tbody id="location-table-body"></tbody>
+            </table>
+        </div>
+
+        <div id="extensions-pane" class="content-pane">
+            <h2>Extensions Management</h2>
+            <p>Total Extensions: <strong id="total-extensions-count">Loading...</strong></p>
+            <h3>Approve Extensions</h3>
+            <p><i>Approval functionality placeholder.</i></p>
+            <div id="pending-extensions-list"></div> 
+        </div>
+        
+        <!-- General Error Display Area -->
+        <div id="error-message"></div> 
+    </div>
+</div>
+
+
+<script>
+    // --- DOM Elements --- 
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const submitButton = document.getElementById('submit-login'); 
+    const loginEntryDiv = document.getElementById('login-entry'); 
+    const loginErrorMessageDiv = document.getElementById('login-error-message');
+    const adminMainArea = document.getElementById('admin-main-area');
+    const logoutButton = document.getElementById('logout-button');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const contentPanes = document.querySelectorAll('.content-pane');
+    const errorMessageDiv = document.getElementById('error-message');
+    const downloadCountSpan = document.getElementById('download-count');
+    const locationTableBody = document.getElementById('location-table-body');
+    const mapChartDiv = document.getElementById('map-chart'); 
+    const totalExtensionsCountSpan = document.getElementById('total-extensions-count');
+    const pendingExtensionsListDiv = document.getElementById('pending-extensions-list');
+
+    // --- Constants & State --- 
+    const locationCoords = {
+        'Bengaluru, India': { lat: 12.97, lon: 77.59 },
+        'Kolkata, India': { lat: 22.57, lon: 88.36 },
+        'Surat, India': { lat: 21.17, lon: 72.83 },
+        'New Delhi, India': { lat: 28.61, lon: 77.20 },
+        'Delhi, India': { lat: 28.61, lon: 77.20 },
+        'Pune, India': { lat: 18.52, lon: 73.85 },
+        'Ahmedabad, India': { lat: 23.02, lon: 72.57 }, // Note: Count updated to 134 in seed
+        'Mumbai, India': { lat: 19.07, lon: 72.87 },
+        'Rajkot, India': { lat: 22.30, lon: 70.80 },
+        'Nagpur, India': { lat: 21.14, lon: 79.08 },    // Note: Count updated to 92 in seed
+        'Hyderabad, India': { lat: 17.38, lon: 78.48 },
+        'Chennai, India': { lat: 13.08, lon: 80.27 },
+        'Guwahati, India': { lat: 26.14, lon: 91.73 },
+        'Vadodara, India': { lat: 22.30, lon: 73.18 },
+        'Chandigarh, India': { lat: 30.73, lon: 76.77 },
+        'Washington, United States': { lat: 38.89, lon: -77.03 }, 
+        'Bharūch, India': { lat: 21.70, lon: 72.97 },
+        'Jaipur, India': { lat: 26.91, lon: 75.78 },
+        'Ghaziabad, India': { lat: 28.67, lon: 77.45 },
+        'Sambalpur, India': { lat: 21.47, lon: 83.98 },
+        'London, United Kingdom': { lat: 51.50, lon: -0.12 },
+        'Bhubaneswar, India': { lat: 20.29, lon: 85.82 },
+        'Pompano Beach, United States': { lat: 26.23, lon: -80.12 },
+        'Patna, India': { lat: 25.59, lon: 85.13 },
+        'Ranchi, India': { lat: 23.34, lon: 85.30 },    // Note: Count updated to 39 in seed
+        'Jersey City, United States': { lat: 40.72, lon: -74.07 },
+        'Jalandhar, India': { lat: 31.32, lon: 75.57 },
+        'Accra, Ghana': { lat: 5.60, lon: -0.20 },
+        'Gurugram, India': { lat: 28.45, lon: 77.02 },
+        'Karnāl, India': { lat: 29.68, lon: 76.99 },
+        'Kanpur, India': { lat: 26.44, lon: 80.33 },
+        'Patiāla, India': { lat: 30.34, lon: 76.38 },
+        'Coimbatore, India': { lat: 11.01, lon: 76.95 },
+        'Salem, India': { lat: 11.66, lon: 78.14 },
+        'Kochi, India': { lat: 9.93, lon: 76.26 },
+        'Raipur, India': { lat: 21.25, lon: 81.62 },
+        'Chhindwāra, India': { lat: 22.05, lon: 78.93 },
+        'Panna, India': { lat: 24.72, lon: 80.18 },
+        'Boisar, India': { lat: 19.79, lon: 72.75 },
+        'Kitchener, Canada': { lat: 43.45, lon: -80.49 },
+        'Hamīrpur, India': { lat: 25.95, lon: 80.15 }, 
+        'Zurich, Switzerland': { lat: 47.37, lon: 8.54 }
+    };
+    let currentUser = null; // Store user info from session
+
+    // --- Functions --- 
+
+    // Pane Switching Logic
+    function switchPane(targetPaneId) {
+        // Deactivate all links and panes
+        navLinks.forEach(link => link.classList.remove('active'));
+        contentPanes.forEach(pane => pane.classList.remove('active'));
+
+        // Activate the target link and pane
+        const targetLink = document.querySelector(`.nav-link[data-target='${targetPaneId}']`);
+        const targetPane = document.getElementById(targetPaneId);
+
+        if (targetLink) targetLink.classList.add('active');
+        if (targetPane) targetPane.classList.add('active');
+        
+        // Reset general error message when switching panes
+        errorMessageDiv.textContent = '';
+    }
+
+    // Function to render the map using Plotly
+    function renderMap(locationData) {
+        console.log("[renderMap] Called with:", locationData);
+        mapChartDiv.innerHTML = '<p style="padding: 20px; text-align:center;"></p>';
+
+        if (!locationData || locationData.length === 0) {
+            mapChartDiv.innerHTML = '<p style="text-align: center; padding: 20px;">No location data to display on map.</p>';
+            return;
+        }
+
+        const plotLats = [];
+        const plotLons = [];
+        const plotCounts = [];
+        const plotHoverText = [];
+        let missingCoordsCount = 0;
+
+        locationData.forEach(item => {
+            const locName = item.location || 'Unknown';
+            const coords = locationCoords[locName]; // Lookup using the location name
+            if (coords) { 
+                plotLats.push(coords.lat);
+                plotLons.push(coords.lon);
+                const count = parseInt(item.count, 10);
+                plotCounts.push(isNaN(count) ? 0 : count);
+                plotHoverText.push(`${locName}: ${isNaN(count) ? 'N/A' : count} downloads`);
+            } else {
+                console.warn(`[renderMap] Coordinates not found for location: ${locName}`);
+                missingCoordsCount++;
+            }
+        });
+        console.log(`[renderMap] Processed locations. Found coords for ${plotLats.length}, missing ${missingCoordsCount}.`);
+
+        if (plotLats.length === 0) {
+             mapChartDiv.innerHTML = '<p style="text-align: center; padding: 20px;">Could not find coordinates for any location.</p>';
+            return;
+        }
+        
+        const maxCount = Math.max(...plotCounts);
+        const sizerefValue = maxCount > 0 ? maxCount / 50 : 1; 
+        console.log(`[renderMap] Max count: ${maxCount}, Sizeref: ${sizerefValue}`);
+
+        const plotData = [{
+            type: 'scattergeo',
+            mode: 'markers',
+            lat: plotLats,      
+            lon: plotLons,      
+            marker: {
+                size: plotCounts,
+                sizemin: 4,
+                sizeref: sizerefValue, 
+                color: plotCounts, 
+                colorscale: 'Viridis', 
+                colorbar: { title: 'Downloads' }
+            },
+            text: plotHoverText, 
+        }];
+
+        const layout = {
+            title: 'Download Locations',
+            geo: { /* ... geo settings ... */ },
+            margin: { t: 50, b: 0, l: 0, r: 0 } 
+        };
+
+        console.log("[renderMap] Calling Plotly.newPlot...");
+        try {
+             Plotly.newPlot('map-chart', plotData, layout);
+             console.log("[renderMap] Plotly.newPlot finished.");
+        } catch (error) {
+             console.error("[renderMap] Error calling Plotly.newPlot:", error);
+             mapChartDiv.innerHTML = '<p style="text-align: center; padding: 20px; color: red;">Error rendering map. Check console.</p>';
+        }       
+    }
+
+    // Fetch Download Stats (GET request, relies on session cookie)
+    async function fetchDownloadStatsData() {
+        errorMessageDiv.textContent = ''; 
+        downloadCountSpan.textContent = 'Loading...'; 
+        locationTableBody.innerHTML = ''; 
+        mapChartDiv.innerHTML = '<p style="padding: 20px; text-align:center;">Loading map data...</p>'; 
+
+        try {
+            // Use GET request, no body/credentials needed here
+            const response = await fetch('/api/download-count', { 
+                method: 'GET', // Changed
+                headers: { 'Accept': 'application/json' } // Added Accept header
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                downloadCountSpan.textContent = data.total_download_count;
+                const locationData = data.downloads_by_location;
+                // Populate table
+                locationTableBody.innerHTML = ''; // Clear loading state
+                if (locationData && locationData.length > 0) {
+                    locationData.forEach(item => {
+                        const row = locationTableBody.insertRow();
+                        row.insertCell().textContent = item.location || 'Unknown';
+                        row.insertCell().textContent = item.count;
+                    });
+                } else { 
+                     const row = locationTableBody.insertRow();
+                     row.insertCell().colSpan = 2;
+                     row.insertCell().textContent = 'No location data available.';
+                }
+                renderMap(locationData);
+                return true; 
+            } else {
+                const errorData = await response.json().catch(() => ({})); 
+                errorMessageDiv.textContent = `Error fetching stats: ${errorData.message || response.statusText || 'Unknown error'} (${response.status})`;
+                if (response.status === 401) { // If unauthorized, trigger logout flow
+                    logout();
+                } else {
+                    downloadCountSpan.textContent = 'Error';
+                    mapChartDiv.innerHTML = '<p style="padding: 20px; text-align:center; color: red;">Could not load map data.</p>'; 
+                }
+                return false; 
+            }
+        } catch (error) {
+            console.error('Fetch stats error:', error);
+            errorMessageDiv.textContent = 'Network error fetching stats. Check console.';
+            downloadCountSpan.textContent = 'Error';
+            mapChartDiv.innerHTML = '<p style="padding: 20px; text-align:center; color: red;">Could not load map data.</p>'; 
+            return false; 
+        }
+    }
+    
+    // Login Logic (Calls /api/auth/signin)
+    async function handleLogin() {
+        const username = usernameInput.value;
+        const password = passwordInput.value;
+        loginErrorMessageDiv.textContent = ''; 
+
+        if (!username || !password) {
+            loginErrorMessageDiv.textContent = 'Username and Password are required.';
+            return;
+        }
+
+        try {
+             const response = await fetch('/api/auth/signin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: username, password: password })
+             });
+
+             if (response.ok) {
+                 const data = await response.json();
+                 currentUser = data.user;
+                 showAdminArea();
+                 fetchDownloadStatsData(); // Fetch initial data after login
+                 // Clear fields
+                 usernameInput.value = '';
+                 passwordInput.value = '';
+             } else {
+                 const errorData = await response.json().catch(() => ({}));
+                 loginErrorMessageDiv.textContent = `Login failed: ${errorData.message || 'Invalid credentials'} (${response.status})`;
+             }
+
+        } catch(error) {
+            console.error('Login fetch error:', error);
+            loginErrorMessageDiv.textContent = 'Login failed due to a network error. Please try again.';
+        }
+    }
+
+    // Logout Logic (Calls /api/auth/signout)
+    async function handleLogout() {
+         try {
+            await fetch('/api/auth/signout', { method: 'POST' });
+         } catch (error) {
+            console.error("Logout fetch error:", error);
+            // Still proceed with client-side logout even if server fails
+         }
+         logout(); // Perform client-side state reset
+    }
+
+    // Client-side state reset for logout
+    function logout() {
+        currentUser = null;
+        adminMainArea.style.display = 'none';
+        loginEntryDiv.classList.add('visible'); // Make login visible
+        document.body.classList.remove('admin-logged-in'); // Reset body background
+        loginErrorMessageDiv.textContent = ''; 
+        errorMessageDiv.textContent = ''; 
+    }
+
+    // Show Admin Area (Helper)
+    function showAdminArea() {
+        adminMainArea.style.display = 'block'; 
+        loginEntryDiv.classList.remove('visible'); // Hide login form
+        document.body.classList.add('admin-logged-in'); // Change body background
+        switchPane('stats-pane'); 
+        errorMessageDiv.textContent = ''; 
+        loginErrorMessageDiv.textContent = ''; 
+    }
+
+    // Initial Page Load Check (Calls /api/auth/session)
+    async function checkSession() {
+        try {
+            const response = await fetch('/api/auth/session', { method: 'GET' });
+            if (response.ok) {
+                const data = await response.json();
+                currentUser = data.user;
+                console.log('Session check OK, user:', currentUser);
+                showAdminArea();
+                fetchDownloadStatsData(); 
+            } else {
+                console.log('No valid session found on server.');
+                logout(); // Ensure login form is shown
+            }
+        } catch (error) {
+            console.error('Session check fetch error:', error);
+            logout(); // Ensure login form is shown
+        }
+    }
+
+    // --- Event Listeners --- 
+    submitButton.addEventListener('click', handleLogin);
+    
+    // Navbar Links
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default anchor behavior
+            switchPane(link.getAttribute('data-target'));
+        });
+    });
+
+    // Logout Button
+    logoutButton.addEventListener('click', handleLogout);
+    
+    // Enter key listeners
+    usernameInput.addEventListener('keypress', function(event) { 
+        if (event.key === 'Enter') { event.preventDefault(); submitButton.click(); } 
+    });
+    passwordInput.addEventListener('keypress', function(event) { 
+        if (event.key === 'Enter') { event.preventDefault(); submitButton.click(); } 
+    });
+
+    // --- Initialize --- 
+    checkSession(); 
+
+</script>
+
+</body>
+</html> 
