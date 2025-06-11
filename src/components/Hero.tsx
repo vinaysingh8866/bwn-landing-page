@@ -112,12 +112,12 @@ export default function Hero({}:HeroProps ){
                         })
                     }}
 
-                    className="animate__fadeInUp hover-button" style={{animationDelay:'0.1s',animationDuration:'0.85s'}} w={'full'} h={'full'} objectFit={'contain'} src="/Browser Landing.svg"/>
+                    className="animate__fadeInUp hover-button" style={{animationDelay:'0.1s',animationDuration:'0.85s'}} w={'full'} h={'full'} objectFit={'contain'} src="/Browser Landing.png"/>
                     </VStack>
                 </Box>
 
                 <Box display={{'md':'none','base':'block'}} position={'absolute'} left={'50%'} bottom={'5rem'} transform={'translateX(-50%)'} h={'85vh'} maxH={'710px'} w={'full'} maxW={'1099.01px'} px={'2rem'} >
-                    <Image minW={'850px'} className=" scroll-inline" w={'full'} h={'full'} objectFit={'contain'} src="/Browser Landing.svg" />
+                    <Image minW={'850px'} className=" scroll-inline" w={'full'} h={'full'} objectFit={'contain'} src="/Browser Landing.png" />
                 </Box>
             </Box>
         </VStack>

@@ -25,7 +25,6 @@ if (!process.env.SESSION_SECRET) {
 }
 const sessionSecret = process.env.SESSION_SECRET || 'default_insecure_session_secret';
 
-// @ts-expect-error - Suppress persistent type error for session middleware
 app.use(session({
   secret: sessionSecret,
   resave: false, 

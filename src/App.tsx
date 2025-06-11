@@ -2,9 +2,9 @@ import { VStack } from '@chakra-ui/react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
-import AOS from 'aos';
-import 'aos/dist/aos.css'; // You can also use <link> for styles
-import 'animate.css';
+// import AOS from 'aos';
+// import 'aos/dist/aos.css'; // You can also use <link> for styles
+// import 'animate.css';
 import { useEffect } from 'react';
 import { trackDownload } from './services/downloadTracker';
 import { trackVisit } from './services/visitTracker';
@@ -12,7 +12,7 @@ import { trackVisit } from './services/visitTracker';
 function App() {
   useEffect(()=>{
     window.addEventListener('load',()=>{
-      AOS.init()
+      // AOS.init()
       trackVisit();
     })
     
@@ -21,7 +21,9 @@ function App() {
     };
     
     window.addEventListener('beforeunload', handleDownload);
-    return () => window.removeEventListener('beforeunload', handleDownload);
+    return () => {
+      window.removeEventListener('beforeunload', handleDownload)
+    };
   },[])
   return (
     <>

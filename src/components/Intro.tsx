@@ -1,5 +1,6 @@
 import { Text, VStack } from "@chakra-ui/react";
 import IntroCard from "./IntroCard";
+import FadeUp from "./FadeUp";
 // import { useEffect } from "react";
 // import AOS from 'aos';
 
@@ -15,7 +16,11 @@ export default function Intro({}:IntroProps ){
     // },[])
     return(
         <VStack w={'full'}    justifyContent={'center'} alignItems={'center'} py={'5rem'} gap={'5rem'}>
-            <Text data-aos="fade-up" data-aos-duration='1000' className="intro-heading" fontSize={{'base':'30px','md':'40px'}} w={'full'} maxW={'1327px'} lineHeight={{'base':'40px','md':'50px'}} fontWeight={'600'} textAlign={'center'} px={'1rem'}>Avant Garde Feature Set</Text>
+            <FadeUp delay={0.05}>
+                <Text data-aos="fade-up" data-aos-duration='1000' className="intro-heading" fontSize={{'base':'30px','md':'40px'}} w={'full'} maxW={'1327px'} lineHeight={{'base':'40px','md':'50px'}} fontWeight={'600'} textAlign={'center'} px={'1rem'}>
+                    Avant Garde Feature Set
+                </Text>
+            </FadeUp>
 
             <VStack w={'full'} justifyContent={'center'} alignItems={'center'} gap={{'base':'5rem','md':'13rem'}}>
                 <IntroCard imgOnLeft={false} imgAddress={'/chatbot.webm'}>
